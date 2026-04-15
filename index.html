@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japan & KL 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;500;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f6f1eb;
+  --bg-card: #fffcf8;
+  --bg-card-hover: #fff9f0;
+  --text: #2c2520;
+  --text-muted: #8a7e74;
+  --text-light: #b5a99a;
+  --accent: #c8553d;
+  --accent-soft: #e8a090;
+  --border: #e6ddd3;
+  --border-light: #efe8df;
+  --tag-flight: #dce8f0;
+  --tag-flight-text: #3a6b8a;
+  --tag-hotel: #e5e0d5;
+  --tag-hotel-text: #6b5e4f;
+  --tag-train: #d8e6d3;
+  --tag-train-text: #4a6b42;
+  --tag-daytrip: #f0e4d6;
+  --tag-daytrip-text: #9a6d3a;
+  --shadow-sm: 0 1px 3px rgba(44,37,32,0.06);
+  --shadow-md: 0 4px 16px rgba(44,37,32,0.08);
+  --shadow-lg: 0 8px 32px rgba(44,37,32,0.12);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* === LOCK SCREEN === */
+.lock-screen {
+  position: fixed; inset: 0; z-index: 1000;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.lock-screen.unlocked {
+  opacity: 0;
+  transform: scale(1.02);
+  pointer-events: none;
+}
+.lock-inner {
+  text-align: center;
+  padding: 2rem;
+  max-width: 360px;
+  width: 100%;
+}
+.lock-kanji {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 4rem;
+  font-weight: 300;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.1em;
+}
+.lock-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.lock-input-wrap {
+  position: relative;
+  margin-bottom: 1rem;
+}
+.lock-input {
+  width: 100%;
+  padding: 14px 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  text-align: center;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.lock-input:focus {
+  border-color: var(--accent-soft);
+  box-shadow: 0 0 0 3px rgba(200,85,61,0.1);
+}
+.lock-input.shake {
+  animation: shake 0.4s ease;
+}
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%,60% { transform: translateX(-8px); }
+  40%,80% { transform: translateX(8px); }
+}
+.lock-hint {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.lock-hint.visible { opacity: 1; }
+
+/* === MAIN APP === */
+.app {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.6s ease 0.3s;
+}
+.app.visible {
+  display: block;
+  opacity: 1;
+}
+
+/* === HEADER === */
+.header {
+  padding: 2.5rem 1.5rem 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.header-top {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+.header h1 {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 500;
+  font-size: 1.8rem;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.header-dates {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.header-bar {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0;
+  border-bottom: 1.5px solid var(--border);
+}
+.tab {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1.5px;
+  transition: color 0.2s, border-color 0.2s;
+  user-select: none;
+  letter-spacing: 0.03em;
+}
+.tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+.tab:hover:not(.active) { color: var(--text); }
+.tab.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* === PROGRESS BAR === */
+.progress-section {
+  max-width: 800px;
+  margin: 1.25rem auto 0;
+  padding: 0 1.5rem;
+}
+.progress-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.progress-bar-bg {
+  flex: 1;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.6s ease;
+  width: 0%;
+}
+.progress-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-family: 'DM Mono', monospace;
+}
+
+/* === TIMELINE === */
+.timeline {
+  max-width: 800px;
+  margin: 1.5rem auto 4rem;
+  padding: 0 1.5rem;
+}
+
+/* === STAY SECTION === */
+.stay {
+  margin-bottom: 0.75rem;
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: box-shadow 0.3s;
+}
+.stay:hover { box-shadow: var(--shadow-md); }
+
+.stay-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  user-select: none;
+  gap: 0.85rem;
+  transition: background 0.2s;
+}
+.stay-header:hover { background: var(--bg-card-hover); }
+
+.stay-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.stay-icon.flight { background: var(--tag-flight); }
+.stay-icon.hotel { background: var(--tag-hotel); }
+.stay-icon.train { background: var(--tag-train); }
+.stay-icon.daytrip { background: var(--tag-daytrip); }
+
+.stay-info { flex: 1; min-width: 0; }
+.stay-title {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text);
+  margin-bottom: 0.15rem;
+}
+.stay-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stay-nights {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--text-light);
+  background: var(--border-light);
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.stay-chevron {
+  width: 20px; height: 20px;
+  color: var(--text-light);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+.stay.open .stay-chevron { transform: rotate(180deg); }
+
+/* === STAY BODY === */
+.stay-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.stay-body-inner {
+  padding: 0 1.25rem 1.25rem;
+}
+
+.event-list { list-style: none; }
+.event-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.65rem 0;
+  border-top: 1px solid var(--border-light);
+  font-size: 0.83rem;
+}
+.event-item:first-child { border-top: none; }
+
+.event-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  min-width: 56px;
+  padding-top: 1px;
+  flex-shrink: 0;
+}
+.event-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+.event-dot.flight { background: var(--tag-flight-text); }
+.event-dot.hotel { background: var(--tag-hotel-text); }
+.event-dot.train { background: var(--tag-train-text); }
+.event-dot.daytrip { background: var(--tag-daytrip-text); }
+
+.event-detail { flex: 1; }
+.event-label {
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 0.1rem;
+}
+.event-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* === TODAY INDICATOR === */
+.stay.today-active {
+  border-color: var(--accent-soft);
+  box-shadow: 0 0 0 2px rgba(200,85,61,0.08), var(--shadow-md);
+}
+.today-badge {
+  display: none;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  background: rgba(200,85,61,0.08);
+  padding: 2px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.stay.today-active .today-badge { display: inline-block; }
+
+/* === PAST SECTION STYLING === */
+.stay.past { opacity: 0.55; }
+.stay.past:hover { opacity: 0.8; }
+
+/* === RESPONSIVE === */
+@media (max-width: 640px) {
+  .header { padding: 2rem 1rem 1rem; }
+  .header h1 { font-size: 1.45rem; }
+  .header-top { flex-direction: column; gap: 0.2rem; }
+  .progress-section, .timeline { padding: 0 1rem; }
+  .stay-header { padding: 0.85rem 1rem; gap: 0.65rem; }
+  .stay-body-inner { padding: 0 1rem 1rem; }
+  .stay-icon { width: 32px; height: 32px; font-size: 1rem; }
+  .stay-title { font-size: 0.85rem; }
+  .event-time { min-width: 48px; font-size: 0.7rem; }
+  .tab { padding: 0.5rem 0.8rem; font-size: 0.78rem; }
+}
+
+/* === ADMIN MODE === */
+.admin-badge {
+  display: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #b48811;
+  background: #fdf3d7;
+  border: 1px solid #f0d87a;
+  padding: 3px 10px;
+  border-radius: 6px;
+  margin-left: auto;
+}
+body.admin-mode .admin-badge { display: inline-block; }
+
+.admin-only { display: none; }
+body.admin-mode .admin-only { display: flex; }
+
+.admin-only-block { display: none; }
+body.admin-mode .admin-only-block { display: block; }
+
+/* admin accent on header */
+body.admin-mode .header-bar { border-bottom-color: #f0d87a; }
+
+/* admin note styling */
+.admin-note {
+  display: none;
+  margin-top: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  background: #fefcf3;
+  border: 1px dashed #e8d48a;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  color: #8a7430;
+}
+body.admin-mode .admin-note { display: block; }
+
+.admin-note-title {
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #b48811;
+  margin-bottom: 0.3rem;
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.stay { animation: fadeInUp 0.4s ease both; }
+.stay:nth-child(1) { animation-delay: 0.05s; }
+.stay:nth-child(2) { animation-delay: 0.1s; }
+.stay:nth-child(3) { animation-delay: 0.15s; }
+.stay:nth-child(4) { animation-delay: 0.2s; }
+.stay:nth-child(5) { animation-delay: 0.25s; }
+.stay:nth-child(6) { animation-delay: 0.3s; }
+.stay:nth-child(7) { animation-delay: 0.35s; }
+.stay:nth-child(8) { animation-delay: 0.4s; }
+.stay:nth-child(9) { animation-delay: 0.45s; }
+.stay:nth-child(10) { animation-delay: 0.5s; }
+</style>
+</head>
+<body>
+
+<!-- LOCK SCREEN -->
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-inner">
+    <div class="lock-kanji">旅</div>
+    <div class="lock-subtitle">Enter password to continue</div>
+    <div class="lock-input-wrap">
+      <input type="password" class="lock-input" id="lockInput" placeholder="・・・・・" autocomplete="off" autofocus>
+    </div>
+    <div class="lock-hint" id="lockHint">Incorrect password</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app" id="app">
+  <div class="header">
+    <div class="header-top">
+      <h1>Japan & KL 2026</h1>
+      <span class="header-dates">23 Apr — 10 May</span>
+      <span class="admin-badge" id="adminBadge">Admin</span>
+    </div>
+    <div class="header-bar">
+      <div class="tab active">Itinerary</div>
+      <div class="tab disabled">Budget</div>
+      <div class="tab disabled">Packing</div>
+      <div class="tab disabled">Notes</div>
+    </div>
+  </div>
+
+  <div class="progress-section">
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressFill"></div>
+      </div>
+      <span class="progress-label" id="progressLabel">—</span>
+    </div>
+  </div>
+
+  <div class="timeline" id="timeline"></div>
+</div>
+
+<script>
+// PASSWORD & ADMIN MODE
+const HASH_BASIC = 'a93f7a91f88ee389a5147b54b22968c2521a59e41b1bf98ff0d22d7b5a704a42';
+const HASH_ADMIN = '18e10022c5340c5f1a95c2cd7f866409bf1cf6b0fab6e3e7265240128503dd96';
+let isAdmin = false;
+
+const lockScreen = document.getElementById('lockScreen');
+const lockInput = document.getElementById('lockInput');
+const lockHint = document.getElementById('lockHint');
+const app = document.getElementById('app');
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function unlock(admin) {
+  isAdmin = admin;
+  sessionStorage.setItem('trip_unlocked', '1');
+  sessionStorage.setItem('trip_admin', admin ? '1' : '0');
+  if (admin) document.body.classList.add('admin-mode');
+  lockScreen.classList.add('unlocked');
+  setTimeout(() => {
+    lockScreen.style.display = 'none';
+    app.style.display = 'block';
+    requestAnimationFrame(() => {
+      app.classList.add('visible');
+      renderTimeline();
+    });
+  }, 500);
+}
+
+// Session restore
+if (sessionStorage.getItem('trip_unlocked') === '1') {
+  isAdmin = sessionStorage.getItem('trip_admin') === '1';
+  if (isAdmin) document.body.classList.add('admin-mode');
+  lockScreen.style.display = 'none';
+  app.classList.add('visible');
+  app.style.display = 'block';
+  app.style.opacity = '1';
+}
+
+lockInput.addEventListener('keydown', async e => {
+  if (e.key === 'Enter') {
+    const hash = await sha256(lockInput.value.trim().toLowerCase());
+    if (hash === HASH_ADMIN) {
+      unlock(true);
+    } else if (hash === HASH_BASIC) {
+      unlock(false);
+    } else {
+      lockInput.classList.add('shake');
+      lockHint.classList.add('visible');
+      setTimeout(() => lockInput.classList.remove('shake'), 400);
+      setTimeout(() => lockHint.classList.remove('visible'), 2000);
+    }
+  }
+});
+
+// DATA
+const tripStart = new Date('2026-04-23');
+const tripEnd = new Date('2026-05-10');
+
+const stays = [
+  {
+    id: 'syd-osaka',
+    icon: '✈️', type: 'flight',
+    title: 'Sydney → Osaka (Kansai)',
+    subtitle: '23 Apr · Flight',
+    nights: null,
+    dates: ['2026-04-23', '2026-04-23'],
+    events: [
+      { time: '11:00am', label: 'Depart Sydney', meta: 'Kansai International', dot: 'flight' },
+      { time: '7:50pm', label: 'Arrive Osaka', meta: 'Same day (local time)', dot: 'flight' },
+    ],
+    adminNotes: 'Booking ref & seat assignments go here. Add any lounge access details.'
+  },
+  {
+    id: 'osaka',
+    icon: '🏯', type: 'hotel',
+    title: 'Osaka · Namba Dotonbori',
+    subtitle: 'The OneFive Osaka Namba Dotonbori',
+    nights: '2 nights',
+    dates: ['2026-04-23', '2026-04-25'],
+    events: [
+      { time: '23 Apr', label: 'Check in', meta: 'The OneFive Osaka Namba Dotonbori · from 3:00pm', dot: 'hotel' },
+      { time: '25 Apr', label: 'Check out', meta: 'By 10:00am', dot: 'hotel' },
+    ],
+    adminNotes: 'Confirmation number, room type, cost per night, and any special requests.'
+  },
+  {
+    id: 'osaka-okayama',
+    icon: '🚅', type: 'train',
+    title: 'Osaka → Okayama',
+    subtitle: '25 Apr · Shinkansen · 45 min',
+    nights: null,
+    dates: ['2026-04-25', '2026-04-25'],
+    events: [
+      { time: '25 Apr', label: 'Shinkansen to Okayama', meta: '~45 minutes', dot: 'train' },
+    ],
+    adminNotes: 'JR Pass details, reserved seat numbers, departure platform.'
+  },
+  {
+    id: 'okayama',
+    icon: '🌿', type: 'hotel',
+    title: 'Okayama',
+    subtitle: 'Via Inn Okayama',
+    nights: '2 nights',
+    dates: ['2026-04-25', '2026-04-27'],
+    events: [
+      { time: '25 Apr', label: 'Check in', meta: 'Via Inn Okayama · from 3:00pm', dot: 'hotel' },
+      { time: '27 Apr', label: 'Check out', meta: 'Via Inn Okayama', dot: 'hotel' },
+    ],
+    adminNotes: 'Confirmation number, room type, cost per night.'
+  },
+  {
+    id: 'okayama-kyoto',
+    icon: '🚅', type: 'train',
+    title: 'Okayama → Kyoto',
+    subtitle: '27 Apr · Shinkansen · 58 min',
+    nights: null,
+    dates: ['2026-04-27', '2026-04-27'],
+    events: [
+      { time: '27 Apr', label: 'Shinkansen to Kyoto', meta: '~58 minutes', dot: 'train' },
+    ],
+    adminNotes: 'JR Pass details, reserved seat numbers, departure platform.'
+  },
+  {
+    id: 'kyoto',
+    icon: '⛩️', type: 'hotel',
+    title: 'Kyoto',
+    subtitle: 'Hotel Tou Nishinotoin Kyoto',
+    nights: '4 nights',
+    dates: ['2026-04-27', '2026-05-01'],
+    events: [
+      { time: '27 Apr', label: 'Check in', meta: 'Hotel Tou Nishinotoin Kyoto · from 3:00pm', dot: 'hotel' },
+      { time: '1 May', label: 'Check out', meta: 'By 11:00am', dot: 'hotel' },
+    ],
+    adminNotes: 'Confirmation number, room type, cost per night.'
+  },
+  {
+    id: 'kyoto-tokyo',
+    icon: '🚅', type: 'train',
+    title: 'Kyoto → Tokyo',
+    subtitle: '1 May · Shinkansen · 2h 20min',
+    nights: null,
+    dates: ['2026-05-01', '2026-05-01'],
+    events: [
+      { time: '1 May', label: 'Shinkansen to Tokyo', meta: '~2 hours 20 minutes', dot: 'train' },
+    ],
+    adminNotes: 'JR Pass details, reserved seat numbers.'
+  },
+  {
+    id: 'tokyo',
+    icon: '🗼', type: 'hotel',
+    title: 'Tokyo',
+    subtitle: 'City Oasis Tokyo',
+    nights: '6 nights',
+    dates: ['2026-05-01', '2026-05-07'],
+    events: [
+      { time: '1 May', label: 'Check in', meta: 'City Oasis Tokyo', dot: 'hotel' },
+      { time: '3–4 May', label: 'Overnight: Hakone', meta: '1115 Ninotaira, Ashigarashimo District, Kanagawa', dot: 'daytrip' },
+      { time: '7 May', label: 'Check out', meta: 'City Oasis Tokyo', dot: 'hotel' },
+    ],
+    adminNotes: 'Confirmation number, cost breakdown, luggage storage for Hakone trip.'
+  },
+  {
+    id: 'hakone',
+    icon: '♨️', type: 'daytrip',
+    title: 'Hakone Overnight Trip',
+    subtitle: '3–4 May · Day trip from Tokyo',
+    nights: '1 night',
+    dates: ['2026-05-03', '2026-05-04'],
+    events: [
+      { time: '3 May', label: 'Travel to Hakone', meta: 'From Tokyo · ~1.5 hours', dot: 'daytrip' },
+      { time: '', label: 'Stay in Hakone', meta: '1115 Ninotaira, Ashigarashimo District, Kanagawa 250-0407', dot: 'daytrip' },
+      { time: '4 May', label: 'Return to Tokyo', meta: 'Back to City Oasis Tokyo', dot: 'daytrip' },
+    ],
+    adminNotes: 'Ryokan booking ref, meal plan (half-board?), transport tickets (Romancecar?).'
+  },
+  {
+    id: 'tokyo-kl',
+    icon: '✈️', type: 'flight',
+    title: 'Tokyo → Kuala Lumpur',
+    subtitle: '7 May · Flight · HND',
+    nights: null,
+    dates: ['2026-05-07', '2026-05-08'],
+    events: [
+      { time: '11:50pm', label: 'Depart Tokyo (HND)', meta: '7 May', dot: 'flight' },
+      { time: '6:10am', label: 'Arrive Kuala Lumpur', meta: '8 May', dot: 'flight' },
+    ],
+    adminNotes: 'Booking ref, airline, seat assignments, baggage allowance.'
+  },
+  {
+    id: 'kl',
+    icon: '🏙️', type: 'hotel',
+    title: 'Kuala Lumpur',
+    subtitle: 'JW Marriott Kuala Lumpur',
+    nights: '3 nights',
+    dates: ['2026-05-07', '2026-05-10'],
+    events: [
+      { time: '7 May', label: 'Check in', meta: 'JW Marriott Kuala Lumpur · from 3:00pm', dot: 'hotel' },
+      { time: '10 May', label: 'Check out', meta: 'By 12:00pm', dot: 'hotel' },
+    ],
+    adminNotes: 'Confirmation number, Marriott Bonvoy details, room type, cost.'
+  },
+  {
+    id: 'kl-syd',
+    icon: '✈️', type: 'flight',
+    title: 'Kuala Lumpur → Sydney',
+    subtitle: '10 May · Flight home',
+    nights: null,
+    dates: ['2026-05-10', '2026-05-10'],
+    events: [
+      { time: '9:15am', label: 'Depart Kuala Lumpur', meta: '10 May', dot: 'flight' },
+      { time: '7:35pm', label: 'Arrive Sydney', meta: 'Welcome home', dot: 'flight' },
+    ],
+    adminNotes: 'Booking ref, airline, seat assignments, baggage.'
+  }
+];
+
+// RENDER
+const timeline = document.getElementById('timeline');
+
+function renderTimeline() {
+  if (timeline.children.length > 0) return; // already rendered
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  stays.forEach((stay, i) => {
+    const startDate = new Date(stay.dates[0]);
+    const endDate = new Date(stay.dates[1]);
+    startDate.setHours(0,0,0,0);
+    endDate.setHours(0,0,0,0);
+
+    const isPast = endDate < today;
+    const isActive = today >= startDate && today <= endDate;
+
+    const div = document.createElement('div');
+    div.className = 'stay' + (isPast ? ' past' : '') + (isActive ? ' today-active' : '');
+    if (isActive) div.classList.add('open');
+
+    const adminNoteHTML = stay.adminNotes
+      ? `<div class="admin-note">
+           <div class="admin-note-title">Admin Notes</div>
+           ${stay.adminNotes}
+         </div>`
+      : '';
+
+    div.innerHTML = `
+      <div class="stay-header" onclick="toggleStay(this)">
+        <div class="stay-icon ${stay.type}">${stay.icon}</div>
+        <div class="stay-info">
+          <div class="stay-title">${stay.title}</div>
+          <div class="stay-subtitle">${stay.subtitle}</div>
+        </div>
+        <span class="today-badge">NOW</span>
+        ${stay.nights ? `<span class="stay-nights">${stay.nights}</span>` : ''}
+        <svg class="stay-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="stay-body">
+        <div class="stay-body-inner">
+          <ul class="event-list">
+            ${stay.events.map(ev => `
+              <li class="event-item${ev.adminOnly ? ' admin-only' : ''}">
+                <span class="event-time">${ev.time}</span>
+                <span class="event-dot ${ev.dot}"></span>
+                <div class="event-detail">
+                  <div class="event-label">${ev.label}</div>
+                  ${ev.meta ? `<div class="event-meta">${ev.meta}</div>` : ''}
+                </div>
+              </li>
+            `).join('')}
+          </ul>
+          ${adminNoteHTML}
+        </div>
+      </div>
+    `;
+
+    timeline.appendChild(div);
+
+    if (isActive) {
+      const body = div.querySelector('.stay-body');
+      requestAnimationFrame(() => {
+        body.style.maxHeight = body.scrollHeight + 'px';
+      });
+    }
+  });
+
+  updateProgress();
+}
+
+// Render on load if already unlocked via session
+if (sessionStorage.getItem('trip_unlocked') === '1') {
+  renderTimeline();
+}
+
+// TOGGLE
+function toggleStay(header) {
+  const stay = header.parentElement;
+  const body = stay.querySelector('.stay-body');
+  const isOpen = stay.classList.contains('open');
+  if (isOpen) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => { body.style.maxHeight = '0'; });
+    stay.classList.remove('open');
+  } else {
+    stay.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.addEventListener('transitionend', function handler() {
+      if (stay.classList.contains('open')) body.style.maxHeight = 'none';
+      body.removeEventListener('transitionend', handler);
+    });
+  }
+}
+
+// PROGRESS
+function updateProgress() {
+  const now = new Date();
+  const total = tripEnd - tripStart;
+  const elapsed = now - tripStart;
+  const pct = Math.max(0, Math.min(100, (elapsed / total) * 100));
+  const fill = document.getElementById('progressFill');
+  const label = document.getElementById('progressLabel');
+
+  if (now < tripStart) {
+    const days = Math.ceil((tripStart - now) / 86400000);
+    fill.style.width = '0%';
+    label.textContent = `${days}d until departure`;
+  } else if (now > tripEnd) {
+    fill.style.width = '100%';
+    label.textContent = 'Trip complete ✓';
+  } else {
+    fill.style.width = pct.toFixed(1) + '%';
+    const daysLeft = Math.ceil((tripEnd - now) / 86400000);
+    label.textContent = `Day ${Math.ceil(elapsed / 86400000)} · ${daysLeft}d left`;
+  }
+}
+</script>
+</body>
+</html>
