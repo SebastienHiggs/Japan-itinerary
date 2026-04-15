@@ -128,7 +128,7 @@ body {
 /* === HEADER === */
 .header {
   padding: 2.5rem 1.5rem 1.5rem;
-  max-width: 800px;
+  max-width: 960px;
   margin: 0 auto;
 }
 .header-top {
@@ -179,7 +179,7 @@ body {
 
 /* === PROGRESS BAR === */
 .progress-section {
-  max-width: 800px;
+  max-width: 960px;
   margin: 1.25rem auto 0;
   padding: 0 1.5rem;
 }
@@ -210,16 +210,8 @@ body {
   font-family: 'DM Mono', monospace;
 }
 
-/* === TIMELINE === */
-.timeline {
-  max-width: 800px;
-  margin: 1.5rem auto 4rem;
-  padding: 0 1.5rem;
-}
-
-/* === STAY SECTION === */
+/* === STAY CARDS (shared by detail panel + mobile day view) === */
 .stay {
-  margin-bottom: 0.75rem;
   border-radius: var(--radius);
   background: var(--bg-card);
   border: 1px solid var(--border-light);
@@ -285,7 +277,6 @@ body {
 }
 .stay.open .stay-chevron { transform: rotate(180deg); }
 
-/* === STAY BODY === */
 .stay-body {
   max-height: 0;
   overflow: hidden;
@@ -336,43 +327,6 @@ body {
   color: var(--text-muted);
 }
 
-/* === TODAY INDICATOR === */
-.stay.today-active {
-  border-color: var(--accent-soft);
-  box-shadow: 0 0 0 2px rgba(200,85,61,0.08), var(--shadow-md);
-}
-.today-badge {
-  display: none;
-  font-size: 0.65rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--accent);
-  background: rgba(200,85,61,0.08);
-  padding: 2px 8px;
-  border-radius: 4px;
-  flex-shrink: 0;
-}
-.stay.today-active .today-badge { display: inline-block; }
-
-/* === PAST SECTION STYLING === */
-.stay.past { opacity: 0.55; }
-.stay.past:hover { opacity: 0.8; }
-
-/* === RESPONSIVE === */
-@media (max-width: 640px) {
-  .header { padding: 2rem 1rem 1rem; }
-  .header h1 { font-size: 1.45rem; }
-  .header-top { flex-direction: column; gap: 0.2rem; }
-  .progress-section, .timeline { padding: 0 1rem; }
-  .stay-header { padding: 0.85rem 1rem; gap: 0.65rem; }
-  .stay-body-inner { padding: 0 1rem 1rem; }
-  .stay-icon { width: 32px; height: 32px; font-size: 1rem; }
-  .stay-title { font-size: 0.85rem; }
-  .event-time { min-width: 48px; font-size: 0.7rem; }
-  .tab { padding: 0.5rem 0.8rem; font-size: 0.78rem; }
-}
-
 /* === ADMIN MODE === */
 .admin-badge {
   display: none;
@@ -396,10 +350,8 @@ body.admin-mode .admin-only { display: flex; }
 .admin-only-block { display: none; }
 body.admin-mode .admin-only-block { display: block; }
 
-/* admin accent on header */
 body.admin-mode .header-bar { border-bottom-color: #f0d87a; }
 
-/* admin note styling */
 .admin-note {
   display: none;
   margin-top: 0.75rem;
@@ -421,22 +373,236 @@ body.admin-mode .admin-note { display: block; }
   margin-bottom: 0.3rem;
 }
 
+/* === CALENDAR VIEW (Desktop) === */
+.cal-view {
+  max-width: 960px;
+  margin: 1.5rem auto 4rem;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cal-week-group {
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.cal-day-headers {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.cal-day-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.55rem 0.25rem 0.4rem;
+  gap: 0.18rem;
+  border-right: 1px solid var(--border-light);
+}
+.cal-day-header:last-child { border-right: none; }
+
+.cal-day-name {
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-light);
+}
+
+.cal-day-num {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  line-height: 1;
+}
+
+.cal-day-header.is-today .cal-day-name { color: var(--accent); }
+.cal-day-header.is-today .cal-day-num {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+.cal-day-header.outside-trip { opacity: 0.3; }
+
+/* Bars area */
+.cal-bars-area {
+  position: relative;
+}
+
+.cal-grid-lines {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  pointer-events: none;
+  z-index: 0;
+}
+.cal-grid-cell {
+  border-right: 1px solid var(--border-light);
+}
+.cal-grid-cell:last-child { border-right: none; }
+.cal-grid-cell.is-today { background: rgba(200,85,61,0.04); }
+.cal-grid-cell.outside-trip { background: rgba(0,0,0,0.018); }
+
+/* Bars */
+.cal-bar {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: filter 0.15s;
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+.cal-bar:hover { filter: brightness(0.91); }
+.cal-bar.active {
+  filter: brightness(0.87);
+  outline: 2px solid rgba(0,0,0,0.2);
+  outline-offset: -1px;
+}
+
+.cal-bar.flight  { background: var(--tag-flight);  color: var(--tag-flight-text); }
+.cal-bar.hotel   { background: var(--tag-hotel);   color: var(--tag-hotel-text); }
+.cal-bar.train   { background: var(--tag-train);   color: var(--tag-train-text); }
+.cal-bar.daytrip { background: var(--tag-daytrip); color: var(--tag-daytrip-text); }
+
+.cal-bar.continues-before { border-top-left-radius: 0; border-bottom-left-radius: 0; }
+.cal-bar.continues-after  { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+
+.cal-bar-label { overflow: hidden; text-overflow: ellipsis; flex: 1; }
+
+/* Detail panel */
+.cal-detail-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.cal-detail-panel.open {
+  border-top: 1px solid var(--border-light);
+}
+
+.cal-detail-inner {
+  padding: 1rem 1.25rem 1.25rem;
+}
+
+.cal-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* === MOBILE DAY VIEW === */
+.day-view {
+  max-width: 800px;
+  margin: 1.5rem auto 4rem;
+  padding: 0 1rem;
+  display: none;
+}
+
+.day-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 0.85rem 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.day-nav-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+.day-nav-btn:hover:not(:disabled) {
+  background: var(--border-light);
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+.day-nav-btn:disabled { opacity: 0.25; cursor: default; }
+.day-nav-btn svg { width: 16px; height: 16px; }
+
+.day-nav-center { text-align: center; }
+.day-nav-name {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+.day-nav-date {
+  display: block;
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.day-stays { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.day-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 640px) {
+  .cal-view { display: none; }
+  .day-view { display: block; }
+  .header { padding: 2rem 1rem 1rem; max-width: 100%; }
+  .header h1 { font-size: 1.45rem; }
+  .header-top { flex-direction: column; gap: 0.2rem; }
+  .progress-section { padding: 0 1rem; max-width: 100%; }
+  .stay-header { padding: 0.85rem 1rem; gap: 0.65rem; }
+  .stay-body-inner { padding: 0 1rem 1rem; }
+  .stay-icon { width: 32px; height: 32px; font-size: 1rem; }
+  .stay-title { font-size: 0.85rem; }
+  .event-time { min-width: 48px; font-size: 0.7rem; }
+  .tab { padding: 0.5rem 0.8rem; font-size: 0.78rem; }
+}
+
 /* === ANIMATIONS === */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-.stay { animation: fadeInUp 0.4s ease both; }
-.stay:nth-child(1) { animation-delay: 0.05s; }
-.stay:nth-child(2) { animation-delay: 0.1s; }
-.stay:nth-child(3) { animation-delay: 0.15s; }
-.stay:nth-child(4) { animation-delay: 0.2s; }
-.stay:nth-child(5) { animation-delay: 0.25s; }
-.stay:nth-child(6) { animation-delay: 0.3s; }
-.stay:nth-child(7) { animation-delay: 0.35s; }
-.stay:nth-child(8) { animation-delay: 0.4s; }
-.stay:nth-child(9) { animation-delay: 0.45s; }
-.stay:nth-child(10) { animation-delay: 0.5s; }
+.cal-week-group {
+  animation: fadeInUp 0.35s ease both;
+}
+.cal-week-group:nth-child(1) { animation-delay: 0.05s; }
+.cal-week-group:nth-child(2) { animation-delay: 0.1s; }
+.cal-week-group:nth-child(3) { animation-delay: 0.15s; }
+.cal-week-group:nth-child(4) { animation-delay: 0.2s; }
 </style>
 </head>
 <body>
@@ -478,7 +644,11 @@ body.admin-mode .admin-note { display: block; }
     </div>
   </div>
 
-  <div class="timeline" id="timeline"></div>
+  <!-- Desktop calendar -->
+  <div class="cal-view" id="calView"></div>
+
+  <!-- Mobile day view -->
+  <div class="day-view" id="dayView"></div>
 </div>
 
 <script>
@@ -488,9 +658,9 @@ const HASH_ADMIN = '18e10022c5340c5f1a95c2cd7f866409bf1cf6b0fab6e3e7265240128503
 let isAdmin = false;
 
 const lockScreen = document.getElementById('lockScreen');
-const lockInput = document.getElementById('lockInput');
-const lockHint = document.getElementById('lockHint');
-const app = document.getElementById('app');
+const lockInput  = document.getElementById('lockInput');
+const lockHint   = document.getElementById('lockHint');
+const app        = document.getElementById('app');
 
 async function sha256(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
@@ -508,7 +678,8 @@ function unlock(admin) {
     app.style.display = 'block';
     requestAnimationFrame(() => {
       app.classList.add('visible');
-      renderTimeline();
+      renderCalendar();
+      renderDayView();
     });
   }, 500);
 }
@@ -541,7 +712,9 @@ lockInput.addEventListener('keydown', async e => {
 
 // DATA
 const tripStart = new Date('2026-04-23');
-const tripEnd = new Date('2026-05-10');
+const tripEnd   = new Date('2026-05-10');
+tripStart.setHours(0,0,0,0);
+tripEnd.setHours(0,0,0,0);
 
 const stays = [
   {
@@ -552,8 +725,8 @@ const stays = [
     nights: null,
     dates: ['2026-04-23', '2026-04-23'],
     events: [
-      { time: '11:00am', label: 'Depart Sydney', meta: 'Kansai International', dot: 'flight' },
-      { time: '7:50pm', label: 'Arrive Osaka', meta: 'Same day (local time)', dot: 'flight' },
+      { time: '11:00am', label: 'Depart Sydney',  meta: 'Kansai International',  dot: 'flight' },
+      { time: '7:50pm',  label: 'Arrive Osaka',   meta: 'Same day (local time)', dot: 'flight' },
     ],
     adminNotes: 'Booking ref & seat assignments go here. Add any lounge access details.'
   },
@@ -565,7 +738,7 @@ const stays = [
     nights: '2 nights',
     dates: ['2026-04-23', '2026-04-25'],
     events: [
-      { time: '23 Apr', label: 'Check in', meta: 'The OneFive Osaka Namba Dotonbori · from 3:00pm', dot: 'hotel' },
+      { time: '23 Apr', label: 'Check in',  meta: 'The OneFive Osaka Namba Dotonbori · from 3:00pm', dot: 'hotel' },
       { time: '25 Apr', label: 'Check out', meta: 'By 10:00am', dot: 'hotel' },
     ],
     adminNotes: 'Confirmation number, room type, cost per night, and any special requests.'
@@ -590,7 +763,7 @@ const stays = [
     nights: '2 nights',
     dates: ['2026-04-25', '2026-04-27'],
     events: [
-      { time: '25 Apr', label: 'Check in', meta: 'Via Inn Okayama · from 3:00pm', dot: 'hotel' },
+      { time: '25 Apr', label: 'Check in',  meta: 'Via Inn Okayama · from 3:00pm', dot: 'hotel' },
       { time: '27 Apr', label: 'Check out', meta: 'Via Inn Okayama', dot: 'hotel' },
     ],
     adminNotes: 'Confirmation number, room type, cost per night.'
@@ -615,8 +788,8 @@ const stays = [
     nights: '4 nights',
     dates: ['2026-04-27', '2026-05-01'],
     events: [
-      { time: '27 Apr', label: 'Check in', meta: 'Hotel Tou Nishinotoin Kyoto · from 3:00pm', dot: 'hotel' },
-      { time: '1 May', label: 'Check out', meta: 'By 11:00am', dot: 'hotel' },
+      { time: '27 Apr', label: 'Check in',  meta: 'Hotel Tou Nishinotoin Kyoto · from 3:00pm', dot: 'hotel' },
+      { time: '1 May',  label: 'Check out', meta: 'By 11:00am', dot: 'hotel' },
     ],
     adminNotes: 'Confirmation number, room type, cost per night.'
   },
@@ -640,23 +813,23 @@ const stays = [
     nights: '6 nights',
     dates: ['2026-05-01', '2026-05-07'],
     events: [
-      { time: '1 May', label: 'Check in', meta: 'City Oasis Tokyo', dot: 'hotel' },
-      { time: '3–4 May', label: 'Overnight: Hakone', meta: '1115 Ninotaira, Ashigarashimo District, Kanagawa', dot: 'daytrip' },
-      { time: '7 May', label: 'Check out', meta: 'City Oasis Tokyo', dot: 'hotel' },
+      { time: '1 May',   label: 'Check in',           meta: 'City Oasis Tokyo', dot: 'hotel' },
+      { time: '3–4 May', label: 'Overnight: Hakone',  meta: 'Hakone, Kanagawa', dot: 'daytrip' },
+      { time: '7 May',   label: 'Check out',          meta: 'City Oasis Tokyo', dot: 'hotel' },
     ],
     adminNotes: 'Confirmation number, cost breakdown, luggage storage for Hakone trip.'
   },
   {
     id: 'hakone',
     icon: '♨️', type: 'daytrip',
-    title: 'Hakone Overnight Trip',
-    subtitle: '3–4 May · Day trip from Tokyo',
+    title: 'Hakone Overnight',
+    subtitle: '3–4 May · Overnight from Tokyo',
     nights: '1 night',
     dates: ['2026-05-03', '2026-05-04'],
     events: [
-      { time: '3 May', label: 'Travel to Hakone', meta: 'From Tokyo · ~1.5 hours', dot: 'daytrip' },
-      { time: '', label: 'Stay in Hakone', meta: '1115 Ninotaira, Ashigarashimo District, Kanagawa 250-0407', dot: 'daytrip' },
-      { time: '4 May', label: 'Return to Tokyo', meta: 'Back to City Oasis Tokyo', dot: 'daytrip' },
+      { time: '3 May', label: 'Travel to Hakone',  meta: 'From Tokyo · ~1.5 hours', dot: 'daytrip' },
+      { time: '',      label: 'Stay in Hakone',    meta: '', dot: 'daytrip' },
+      { time: '4 May', label: 'Return to Tokyo',   meta: 'Back to City Oasis Tokyo', dot: 'daytrip' },
     ],
     adminNotes: 'Ryokan booking ref, meal plan (half-board?), transport tickets (Romancecar?).'
   },
@@ -668,8 +841,8 @@ const stays = [
     nights: null,
     dates: ['2026-05-07', '2026-05-08'],
     events: [
-      { time: '11:50pm', label: 'Depart Tokyo (HND)', meta: '7 May', dot: 'flight' },
-      { time: '6:10am', label: 'Arrive Kuala Lumpur', meta: '8 May', dot: 'flight' },
+      { time: '11:50pm', label: 'Depart Tokyo (HND)',    meta: '7 May', dot: 'flight' },
+      { time: '6:10am',  label: 'Arrive Kuala Lumpur',  meta: '8 May', dot: 'flight' },
     ],
     adminNotes: 'Booking ref, airline, seat assignments, baggage allowance.'
   },
@@ -681,7 +854,7 @@ const stays = [
     nights: '3 nights',
     dates: ['2026-05-07', '2026-05-10'],
     events: [
-      { time: '7 May', label: 'Check in', meta: 'JW Marriott Kuala Lumpur · from 3:00pm', dot: 'hotel' },
+      { time: '7 May',  label: 'Check in',  meta: 'JW Marriott Kuala Lumpur · from 3:00pm', dot: 'hotel' },
       { time: '10 May', label: 'Check out', meta: 'By 12:00pm', dot: 'hotel' },
     ],
     adminNotes: 'Confirmation number, Marriott Bonvoy details, room type, cost.'
@@ -695,90 +868,324 @@ const stays = [
     dates: ['2026-05-10', '2026-05-10'],
     events: [
       { time: '9:15am', label: 'Depart Kuala Lumpur', meta: '10 May', dot: 'flight' },
-      { time: '7:35pm', label: 'Arrive Sydney', meta: 'Welcome home', dot: 'flight' },
+      { time: '7:35pm', label: 'Arrive Sydney',        meta: 'Welcome home', dot: 'flight' },
     ],
     adminNotes: 'Booking ref, airline, seat assignments, baggage.'
   }
 ];
 
-// RENDER
-const timeline = document.getElementById('timeline');
+// =====================
+// CALENDAR VIEW (Desktop)
+// =====================
+const DAY_NAMES   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const BAR_H   = 28;
+const BAR_GAP = 4;
+const BAR_PAD = 8; // top/bottom padding inside bars area
 
-function renderTimeline() {
-  if (timeline.children.length > 0) return; // already rendered
+function buildWeeks() {
+  // Start from the Sunday on or before tripStart
+  const start = new Date(tripStart);
+  start.setDate(start.getDate() - start.getDay());
 
-  const today = new Date();
-  today.setHours(0,0,0,0);
+  const weeks = [];
+  let cur = new Date(start);
+  while (cur <= tripEnd) {
+    const days = Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(cur);
+      d.setDate(d.getDate() + i);
+      return d;
+    });
+    weeks.push({ start: new Date(cur), end: days[6], days });
+    cur.setDate(cur.getDate() + 7);
+  }
+  return weeks;
+}
 
-  stays.forEach((stay, i) => {
-    const startDate = new Date(stay.dates[0]);
-    const endDate = new Date(stay.dates[1]);
-    startDate.setHours(0,0,0,0);
-    endDate.setHours(0,0,0,0);
+function getBarsForWeek(week) {
+  const bars = [];
+  stays.forEach(stay => {
+    const s = new Date(stay.dates[0]); s.setHours(0,0,0,0);
+    const e = new Date(stay.dates[1]); e.setHours(0,0,0,0);
+    if (e < week.start || s > week.end) return;
 
-    const isPast = endDate < today;
-    const isActive = today >= startDate && today <= endDate;
+    const clampedStart = s < week.start ? week.start : s;
+    const clampedEnd   = e > week.end   ? week.end   : e;
 
-    const div = document.createElement('div');
-    div.className = 'stay' + (isPast ? ' past' : '') + (isActive ? ' today-active' : '');
-    if (isActive) div.classList.add('open');
+    bars.push({
+      stay,
+      colStart: clampedStart.getDay(),
+      colEnd:   clampedEnd.getDay(),
+      continuesBefore: s < week.start,
+      continuesAfter:  e > week.end,
+    });
+  });
 
-    const adminNoteHTML = stay.adminNotes
-      ? `<div class="admin-note">
-           <div class="admin-note-title">Admin Notes</div>
-           ${stay.adminNotes}
-         </div>`
-      : '';
+  // Sort by start col, then put multi-day before single-day for better packing
+  bars.sort((a, b) =>
+    a.colStart - b.colStart ||
+    (b.colEnd - b.colStart) - (a.colEnd - a.colStart)
+  );
 
-    div.innerHTML = `
-      <div class="stay-header" onclick="toggleStay(this)">
+  // Greedy row assignment
+  const slots = []; // slots[rowIdx] = last occupied colEnd
+  bars.forEach(bar => {
+    let row = slots.findIndex(endCol => endCol < bar.colStart);
+    if (row === -1) { row = slots.length; slots.push(-1); }
+    slots[row] = bar.colEnd;
+    bar.row = row;
+  });
+
+  return { bars, rowCount: Math.max(1, slots.length) };
+}
+
+let openCalDetail = null; // { weekEl, stayId }
+
+function toggleCalDetail(stayId, weekEl) {
+  const panel = weekEl.querySelector('.cal-detail-panel');
+  const isSame = openCalDetail &&
+    openCalDetail.weekEl === weekEl &&
+    openCalDetail.stayId === stayId;
+
+  // Close whatever is open
+  if (openCalDetail) {
+    const prev = openCalDetail.weekEl.querySelector('.cal-detail-panel');
+    prev.style.maxHeight = prev.scrollHeight + 'px';
+    requestAnimationFrame(() => {
+      prev.style.maxHeight = '0';
+      prev.classList.remove('open');
+    });
+    openCalDetail.weekEl.querySelectorAll('.cal-bar')
+      .forEach(b => b.classList.remove('active'));
+    openCalDetail = null;
+  }
+
+  if (isSame) return;
+
+  const stay = stays.find(s => s.id === stayId);
+  if (!stay) return;
+
+  const adminNoteHTML = stay.adminNotes
+    ? `<div class="admin-note"><div class="admin-note-title">Admin Notes</div>${stay.adminNotes}</div>`
+    : '';
+
+  panel.innerHTML = `
+    <div class="cal-detail-inner">
+      <div class="cal-detail-header">
         <div class="stay-icon ${stay.type}">${stay.icon}</div>
         <div class="stay-info">
           <div class="stay-title">${stay.title}</div>
           <div class="stay-subtitle">${stay.subtitle}</div>
         </div>
-        <span class="today-badge">NOW</span>
         ${stay.nights ? `<span class="stay-nights">${stay.nights}</span>` : ''}
-        <svg class="stay-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
-      <div class="stay-body">
-        <div class="stay-body-inner">
-          <ul class="event-list">
-            ${stay.events.map(ev => `
-              <li class="event-item${ev.adminOnly ? ' admin-only' : ''}">
-                <span class="event-time">${ev.time}</span>
-                <span class="event-dot ${ev.dot}"></span>
-                <div class="event-detail">
-                  <div class="event-label">${ev.label}</div>
-                  ${ev.meta ? `<div class="event-meta">${ev.meta}</div>` : ''}
-                </div>
-              </li>
-            `).join('')}
-          </ul>
-          ${adminNoteHTML}
-        </div>
-      </div>
-    `;
+      <ul class="event-list">
+        ${stay.events.map(ev => `
+          <li class="event-item${ev.adminOnly ? ' admin-only' : ''}">
+            <span class="event-time">${ev.time}</span>
+            <span class="event-dot ${ev.dot}"></span>
+            <div class="event-detail">
+              <div class="event-label">${ev.label}</div>
+              ${ev.meta ? `<div class="event-meta">${ev.meta}</div>` : ''}
+            </div>
+          </li>
+        `).join('')}
+      </ul>
+      ${adminNoteHTML}
+    </div>`;
 
-    timeline.appendChild(div);
+  panel.classList.add('open');
+  panel.style.maxHeight = '0';
+  requestAnimationFrame(() => {
+    panel.style.maxHeight = panel.scrollHeight + 'px';
+    panel.addEventListener('transitionend', function h() {
+      if (panel.classList.contains('open')) panel.style.maxHeight = 'none';
+      panel.removeEventListener('transitionend', h);
+    });
+  });
 
-    if (isActive) {
-      const body = div.querySelector('.stay-body');
-      requestAnimationFrame(() => {
-        body.style.maxHeight = body.scrollHeight + 'px';
-      });
-    }
+  const activeBar = weekEl.querySelector(`.cal-bar[data-stay-id="${stayId}"]`);
+  if (activeBar) activeBar.classList.add('active');
+  openCalDetail = { weekEl, stayId };
+}
+
+function renderCalendar() {
+  const calView = document.getElementById('calView');
+  if (calView.children.length > 0) return;
+
+  const today = new Date(); today.setHours(0,0,0,0);
+  const weeks = buildWeeks();
+
+  weeks.forEach(week => {
+    const { bars, rowCount } = getBarsForWeek(week);
+    const barsH = BAR_PAD * 2 + rowCount * BAR_H + (rowCount - 1) * BAR_GAP;
+
+    const weekEl = document.createElement('div');
+    weekEl.className = 'cal-week-group';
+
+    // Day headers row
+    const hdrsEl = document.createElement('div');
+    hdrsEl.className = 'cal-day-headers';
+    week.days.forEach(day => {
+      const isToday  = day.getTime() === today.getTime();
+      const inTrip   = day >= tripStart && day <= tripEnd;
+      const hEl = document.createElement('div');
+      hEl.className = 'cal-day-header'
+        + (isToday ? ' is-today' : '')
+        + (!inTrip ? ' outside-trip' : '');
+      hEl.innerHTML =
+        `<span class="cal-day-name">${DAY_NAMES[day.getDay()]}</span>` +
+        `<span class="cal-day-num">${day.getDate()}</span>`;
+      hdrsEl.appendChild(hEl);
+    });
+    weekEl.appendChild(hdrsEl);
+
+    // Bars area
+    const barsEl = document.createElement('div');
+    barsEl.className = 'cal-bars-area';
+    barsEl.style.height = barsH + 'px';
+
+    // Background grid lines
+    const gridEl = document.createElement('div');
+    gridEl.className = 'cal-grid-lines';
+    week.days.forEach(day => {
+      const cell = document.createElement('div');
+      cell.className = 'cal-grid-cell'
+        + (day.getTime() === today.getTime() ? ' is-today' : '')
+        + (day < tripStart || day > tripEnd ? ' outside-trip' : '');
+      gridEl.appendChild(cell);
+    });
+    barsEl.appendChild(gridEl);
+
+    // Event bars
+    bars.forEach(bar => {
+      const leftInset  = bar.continuesBefore ? 0 : 2;
+      const rightInset = bar.continuesAfter  ? 0 : 2;
+
+      const barEl = document.createElement('div');
+      barEl.className = `cal-bar ${bar.stay.type}`
+        + (bar.continuesBefore ? ' continues-before' : '')
+        + (bar.continuesAfter  ? ' continues-after'  : '');
+      barEl.dataset.stayId = bar.stay.id;
+      barEl.style.cssText = [
+        `left:   calc(${bar.colStart} / 7 * 100% + ${leftInset}px)`,
+        `width:  calc(${bar.colEnd - bar.colStart + 1} / 7 * 100% - ${leftInset + rightInset}px)`,
+        `top:    ${BAR_PAD + bar.row * (BAR_H + BAR_GAP)}px`,
+        `height: ${BAR_H}px`,
+      ].join(';');
+      barEl.innerHTML =
+        `<span>${bar.stay.icon}</span>` +
+        `<span class="cal-bar-label">${bar.stay.title}</span>`;
+      barEl.addEventListener('click', () => toggleCalDetail(bar.stay.id, weekEl));
+      barsEl.appendChild(barEl);
+    });
+
+    weekEl.appendChild(barsEl);
+
+    // Detail panel (closed by default)
+    const detailEl = document.createElement('div');
+    detailEl.className = 'cal-detail-panel';
+    detailEl.style.maxHeight = '0';
+    weekEl.appendChild(detailEl);
+
+    calView.appendChild(weekEl);
   });
 
   updateProgress();
 }
 
-// Render on load if already unlocked via session
-if (sessionStorage.getItem('trip_unlocked') === '1') {
-  renderTimeline();
+// =====================
+// MOBILE DAY VIEW
+// =====================
+let currentDay = null;
+
+function renderDayView() {
+  const dayView = document.getElementById('dayView');
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  if (!currentDay) {
+    currentDay = (today >= tripStart && today <= tripEnd)
+      ? new Date(today)
+      : new Date(tripStart);
+  }
+
+  const date = currentDay;
+  const prev = new Date(date); prev.setDate(prev.getDate() - 1);
+  const next = new Date(date); next.setDate(next.getDate() + 1);
+  const canPrev = prev >= tripStart;
+  const canNext = next <= tripEnd;
+
+  const dayStays = stays.filter(stay => {
+    const s = new Date(stay.dates[0]); s.setHours(0,0,0,0);
+    const e = new Date(stay.dates[1]); e.setHours(0,0,0,0);
+    return date >= s && date <= e;
+  });
+
+  const staysHTML = dayStays.length === 0
+    ? '<div class="day-empty">No events this day</div>'
+    : dayStays.map(stay => {
+        const adminNoteHTML = stay.adminNotes
+          ? `<div class="admin-note"><div class="admin-note-title">Admin Notes</div>${stay.adminNotes}</div>`
+          : '';
+        return `
+          <div class="stay open">
+            <div class="stay-header" onclick="toggleStay(this)">
+              <div class="stay-icon ${stay.type}">${stay.icon}</div>
+              <div class="stay-info">
+                <div class="stay-title">${stay.title}</div>
+                <div class="stay-subtitle">${stay.subtitle}</div>
+              </div>
+              ${stay.nights ? `<span class="stay-nights">${stay.nights}</span>` : ''}
+              <svg class="stay-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="stay-body" style="max-height:none">
+              <div class="stay-body-inner">
+                <ul class="event-list">
+                  ${stay.events.map(ev => `
+                    <li class="event-item${ev.adminOnly ? ' admin-only' : ''}">
+                      <span class="event-time">${ev.time}</span>
+                      <span class="event-dot ${ev.dot}"></span>
+                      <div class="event-detail">
+                        <div class="event-label">${ev.label}</div>
+                        ${ev.meta ? `<div class="event-meta">${ev.meta}</div>` : ''}
+                      </div>
+                    </li>
+                  `).join('')}
+                </ul>
+                ${adminNoteHTML}
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+
+  dayView.innerHTML = `
+    <div class="day-nav">
+      <button class="day-nav-btn" onclick="navigateDay(-1)" ${!canPrev ? 'disabled' : ''}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="day-nav-center">
+        <span class="day-nav-name">${DAY_NAMES[date.getDay()]}</span>
+        <span class="day-nav-date">${date.getDate()} ${MONTH_SHORT[date.getMonth()]}</span>
+      </div>
+      <button class="day-nav-btn" onclick="navigateDay(1)" ${!canNext ? 'disabled' : ''}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+    <div class="day-stays">${staysHTML}</div>`;
+
+  updateProgress();
 }
 
-// TOGGLE
+function navigateDay(dir) {
+  const next = new Date(currentDay);
+  next.setDate(next.getDate() + dir);
+  if (next >= tripStart && next <= tripEnd) {
+    currentDay = next;
+    renderDayView();
+  }
+}
+
+// TOGGLE (used by mobile day view cards)
 function toggleStay(header) {
   const stay = header.parentElement;
   const body = stay.querySelector('.stay-body');
@@ -800,10 +1207,10 @@ function toggleStay(header) {
 // PROGRESS
 function updateProgress() {
   const now = new Date();
-  const total = tripEnd - tripStart;
+  const total   = tripEnd - tripStart;
   const elapsed = now - tripStart;
   const pct = Math.max(0, Math.min(100, (elapsed / total) * 100));
-  const fill = document.getElementById('progressFill');
+  const fill  = document.getElementById('progressFill');
   const label = document.getElementById('progressLabel');
 
   if (now < tripStart) {
@@ -818,6 +1225,12 @@ function updateProgress() {
     const daysLeft = Math.ceil((tripEnd - now) / 86400000);
     label.textContent = `Day ${Math.ceil(elapsed / 86400000)} · ${daysLeft}d left`;
   }
+}
+
+// Render on load if already unlocked via session
+if (sessionStorage.getItem('trip_unlocked') === '1') {
+  renderCalendar();
+  renderDayView();
 }
 </script>
 </body>
