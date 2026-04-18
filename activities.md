@@ -109,16 +109,23 @@ Go to Dover St Market
 - Matcha desserts
 - Green tea soba
 
-**In Kyoto:**
-- Katayama Bunzaburo (gift store)
-- Kahitsukan (gallery)
-- Amam Dacotan (bakery)
-- Ryouen (specialty tea place)
-- Angers (home goods)
-- Hotel Tou Nishinotoin — Phoebe chose this hotel; worth exploring the property itself
-- Eight (bakery)
-- Kikuo Shoten (print store)
+**In Kyoto — Central / Kawaramachi–Sanjo corridor:**
+- Nishiki Market (food) — already in Recommended above
+- Amam Dacotan (food · bakery)
+- Angers (shopping · home goods)
+- Katayama Bunzaburo (shopping · gifts) *(verify exact location)*
+
+**Gion / Higashiyama area:**
+- Kahitsukan (activity · gallery) *(verify exact location)*
 - Beatle Momo (bar)
+
+**Near hotel — Nishinotoin / Nijo area:**
+- Hotel Tou Nishinotoin — Phoebe chose this hotel; worth exploring the property itself
+
+**Verify location:**
+- Eight (food · bakery)
+- Kikuo Shoten (shopping · print store)
+- Ryouen (shopping · specialty tea)
 
 ### Sebastien wants to do
 - **Hozugawa River Boat Ride** (保津川下り) — 2-hour ride down the Hozu River rapids from Kameoka to Arashiyama. Scenic gorge, actual rapids, great fun. Pairs perfectly with the Sagano Torokko train (take the train one way, ride the boat back). **Book in advance.**
@@ -159,44 +166,54 @@ Go to Dover St Market
 - **Anniversary dinner** — ~$200 AUD for two (~¥19,000). Plenty of options at this budget: a quality omakase sushi counter, teppanyaki wagyu, or upscale kaiseki. Book 4–6 weeks ahead.
 
 ### Phoebe wants to do
-**Shopping:**
-- Omotesando
-- Laforet Harajuku
-- Dover Street Market (Ginza)
-- 2nd Street (2-level thrifting)
-- Shibuya Parco
-- Comme des Garçons
-- Hysteric Glamour
-- Casanova Vintage
-- Ozeki (lamp store)
-- Shimokitazawa
-- Chingle Bell
-- Morioka Shoten (bookstore)
-- Visvim
 
-**Cafes** *(long list — consider starring top 5):*
-- Ogawa Coffee Laboratory
-- Gigio
-- Cafe Kitsune
-- Little Cloud Coffee
-- Connell Coffee
-- Plat
-- Kissaten Seven
-- Recoco Record
-- Parlor Ohashi
-- White Glass Coffee
-- About Life Coffee
-- Verve Coffee Roasters
-- Cafe Les Jeux
-- I'm Donut?
-- Higuma Donuts
-- Bongen
-- Hatoya Asakusa
+**Harajuku / Omotesando / Aoyama:**
+- Laforet Harajuku (shopping)
+- Hysteric Glamour (shopping)
+- Omotesando (shopping street)
+- Comme des Garçons (shopping · Minami-Aoyama end)
+- 2nd Street (shopping · thrifting — verify which location, large one nearby)
+- Cafe Kitsune (food · cafe)
+- White Glass Coffee (food · cafe)
+- Higuma Donuts (food)
 
-**Culture:**
-- Shiseido Gallery (Ginza — free, contemporary art)
-- A10 bar (Shibuya) — from initial notes
-- Art museum — teamLab Planets or Mori Art Museum recommended (see above)
+**Shibuya:**
+- Shibuya Parco (shopping)
+- A10 bar (bar)
+- About Life Coffee (food · cafe)
+- Ogawa Coffee Laboratory (food · cafe · multiple locations, one nearby)
+
+**Shimokitazawa:**
+- Casanova Vintage (shopping)
+- Chingle Bell (shopping)
+- Recoco Record (activity · record shop cafe)
+
+**Ginza:**
+- Dover Street Market (shopping)
+- Morioka Shoten (activity · single-book bookstore, genuinely special)
+- Shiseido Gallery (activity · contemporary art, free)
+
+**Daikanyama / Nakameguro:**
+- Visvim (shopping)
+- I'm Donut? (food)
+
+**Asakusa:**
+- Hatoya Asakusa (food · cafe)
+
+**Roppongi / Toyosu:**
+- Mori Art Museum (activity · contemporary art + city views · Roppongi Hills)
+- teamLab Planets (activity · immersive digital art · Toyosu, advance booking required)
+
+**Verify location — need to place these:**
+- Ozeki (shopping · lamp store)
+- Little Cloud Coffee (food · cafe)
+- Connell Coffee (food · cafe)
+- Plat (food · cafe)
+- Kissaten Seven (food · cafe)
+- Parlor Ohashi (food · cafe)
+- Verve Coffee Roasters (food · cafe)
+- Cafe Les Jeux (food · cafe)
+- Bongen (food · cafe)
 
 ### Sebastien wants to do
 **Nature day trip:**
