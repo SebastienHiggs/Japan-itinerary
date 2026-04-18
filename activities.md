@@ -132,7 +132,9 @@ Go to Dover St Market
 **1–7 May · 6 nights · City Oasis Tokyo**
 *(includes Hakone overnight 3–4 May)*
 
-> **Timing:** Arrive May 1 afternoon. Hakone trip May 3–4. Fly out May 7 at 11:50pm — full last day available. Effective Tokyo days: May 1 (partial), 2, 3 (morning before Hakone), 4 (afternoon back from Hakone), 5, 6, 7 (until evening). ~5 full days of activities. Note: Golden Week ends May 6 — first few days still busy.
+> **Timing:** Arrive May 1 afternoon. Hakone trip May 3–4. Fly out May 7 at 11:50pm — full last day available. ~5 usable days: May 1 (partial), 2 (full), 3 (morning before Hakone), 4 (afternoon back), 5–7 (full). Golden Week ends May 6 — first few days still busy, book teamLab Planets in advance.
+>
+> **Rough shape of the week:** 1 day Kamakura · 1 day Asakusa + Akihabara · 1 day Shibuya + Meiji Shrine + Harajuku · 1 day Shinjuku + teamLab · 1 day flexible + anniversary dinner evening
 
 ### Notes
 - Long cafe/shopping list — worth star-rating into must-do vs nice-to-have given limited days
@@ -197,15 +199,12 @@ Go to Dover St Market
 - Art museum — teamLab Planets or Mori Art Museum recommended (see above)
 
 ### Sebastien wants to do
-**Nature day trips:**
-- **Kamakura** — forest walking trails, temples, Giant Buddha, coastal views. ~1 hr from Tokyo by train. Ideal spring conditions in early May.
-- **Mount Takao** — short flexible hike close to Tokyo; multiple trail options and cable car available. ~1 hr from Shinjuku.
+**Nature day trip:**
+- **Kamakura** — Giant Buddha, Zen temples, forested hiking trails between shrines, ends at the coast. ~1 hr from Tokyo. Feels genuinely distinct from the city. Full day.
 
 **Electronics / nerdy:**
 - Akihabara — the main event for electronics, hobby shops, retro tech (see Recommended)
-- National Museum of Nature and Science (Ueno) — if you want the engineering/science museum angle
-
-**Note:** Pick one nature day trip + Akihabara as priorities; doing all three on top of Tokyo sightseeing will be a squeeze.
+- National Museum of Nature and Science (Ueno) — engineering/science museum angle, same side of the city as Akihabara
 
 ---
 
@@ -237,7 +236,9 @@ Go to Dover St Market
 ## Kuala Lumpur
 **8–10 May · 3 nights · JW Marriott Kuala Lumpur**
 
-> **Timing:** Arrive 6:10am May 8 (overnight flight from Tokyo). Check out by noon May 10, fly home at 9:15am — so effectively May 8 afternoon + full day May 9 + May 10 morning. ~2.5 days. The JW Marriott is in Bukit Bintang — central location, walkable to a lot.
+> **Timing:** Arrive 6:10am May 8 — rest up, afternoon/evening only. One full day May 9. Fly home May 10 at 9:15am meaning leaving the hotel around 6am. Effectively **1.5 days**. The JW Marriott is in Bukit Bintang — central, walkable to most things.
+>
+> **Rough shape:** May 8 evening → Jalan Alor night market (walkable from hotel). May 9 → Batu Caves in the morning, Petronas Towers afternoon/evening.
 
 ### Notes
 - 
