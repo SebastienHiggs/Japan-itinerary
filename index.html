@@ -603,6 +603,235 @@ body.admin-mode .admin-note { display: block; }
 .cal-week-group:nth-child(2) { animation-delay: 0.1s; }
 .cal-week-group:nth-child(3) { animation-delay: 0.15s; }
 .cal-week-group:nth-child(4) { animation-delay: 0.2s; }
+
+/* === CITY ACTIVITY VIEW (Admin) === */
+.admin-tab { display: none; }
+body.admin-mode .admin-tab { display: block; }
+
+.tab-city-name { display: block; }
+.tab-city-date {
+  display: block;
+  font-size: 0.6rem;
+  font-family: 'DM Mono', monospace;
+  margin-top: 1px;
+  opacity: 0.7;
+  font-weight: 400;
+}
+body.admin-mode .tab.admin-tab { color: #9a7820; }
+body.admin-mode .tab.admin-tab.active { color: #b48811; border-bottom-color: #b48811; }
+body.admin-mode .tab.admin-tab:hover:not(.active) { color: var(--text); }
+body.admin-mode .tab-sep {
+  display: block;
+  width: 1px;
+  background: #e8d48a;
+  margin: 6px 2px;
+  align-self: stretch;
+}
+
+.city-view {
+  max-width: 960px;
+  margin: 1.5rem auto 4rem;
+  padding: 0 1.5rem;
+  display: none;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.city-header-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 1.25rem;
+}
+.city-header-top {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.35rem;
+}
+.city-header-icon { font-size: 1.4rem; }
+.city-header-name {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+.city-header-dates {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: 'DM Mono', monospace;
+}
+.city-header-hotel {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+.city-timing {
+  font-size: 0.79rem;
+  color: var(--text);
+  background: var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.8rem;
+  line-height: 1.55;
+}
+.city-friends-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.6rem;
+  font-size: 0.73rem;
+  font-weight: 500;
+  color: #6b5e4f;
+  background: var(--tag-hotel);
+  padding: 3px 9px;
+  border-radius: 6px;
+}
+.city-warning {
+  margin-top: 0.6rem;
+  font-size: 0.78rem;
+  color: #9a5a10;
+  background: #fdf0e0;
+  border: 1px solid #f0c878;
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.8rem;
+  line-height: 1.5;
+}
+
+.section-label {
+  font-size: 0.63rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--text-light);
+  padding-left: 0.2rem;
+  margin-bottom: -0.25rem;
+}
+
+.day-trip-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-left: 3px solid var(--tag-daytrip-text);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 1rem 1.25rem;
+}
+.day-trip-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.3rem;
+}
+.day-trip-name { font-weight: 600; font-size: 0.92rem; }
+.day-trip-who {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--tag-daytrip-text);
+  background: var(--tag-daytrip);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+.day-trip-meta {
+  margin-left: auto;
+  font-size: 0.73rem;
+  color: var(--text-muted);
+  font-family: 'DM Mono', monospace;
+}
+.day-trip-note {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 0.65rem;
+  line-height: 1.5;
+}
+
+.neighbourhood-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.neighbourhood-card:hover { box-shadow: var(--shadow-md); }
+.neighbourhood-header {
+  padding: 0.85rem 1.25rem;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+.neighbourhood-header:hover { background: var(--bg-card-hover); }
+.neighbourhood-header-top {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.neighbourhood-name { font-weight: 600; font-size: 0.88rem; flex: 1; }
+.neighbourhood-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--text-light);
+  background: var(--border-light);
+  padding: 2px 7px;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+.neighbourhood-chevron {
+  width: 18px; height: 18px;
+  color: var(--text-light);
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+.neighbourhood-card.open .neighbourhood-chevron { transform: rotate(180deg); }
+.neighbourhood-sub-note {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+  line-height: 1.4;
+}
+.neighbourhood-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+.neighbourhood-body-inner {
+  padding: 0 1.25rem 1rem;
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.55rem 0;
+  border-top: 1px solid var(--border-light);
+}
+.activity-item:first-child { border-top: none; }
+.activity-detail { flex: 1; min-width: 0; }
+.activity-name { font-size: 0.83rem; font-weight: 500; color: var(--text); }
+.activity-note { font-size: 0.74rem; color: var(--text-muted); margin-top: 0.1rem; line-height: 1.4; }
+.activity-badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+.badge-food     { background: #fde8d8; color: #c25a1a; }
+.badge-activity { background: var(--tag-flight); color: var(--tag-flight-text); }
+.badge-shopping { background: #ede0f5; color: #7a3a9a; }
+.badge-bar      { background: #e8e0d8; color: #5a4a3a; }
+.badge-culture  { background: var(--tag-train); color: var(--tag-train-text); }
+
+@media (max-width: 640px) {
+  .city-view { padding: 0 1rem; }
+  .neighbourhood-sub-note { font-size: 0.7rem; }
+}
 </style>
 </head>
 <body>
@@ -628,10 +857,17 @@ body.admin-mode .admin-note { display: block; }
       <span class="admin-badge" id="adminBadge">Admin</span>
     </div>
     <div class="header-bar">
-      <div class="tab active">Itinerary</div>
+      <div class="tab active" onclick="switchToItinerary(this)">Itinerary</div>
       <div class="tab disabled">Budget</div>
       <div class="tab disabled">Packing</div>
       <div class="tab disabled">Notes</div>
+      <div class="tab-sep admin-tab"></div>
+      <div class="tab admin-tab" onclick="switchToCity('osaka',this)"><span class="tab-city-name">Osaka</span><span class="tab-city-date">23–25 Apr</span></div>
+      <div class="tab admin-tab" onclick="switchToCity('okayama',this)"><span class="tab-city-name">Okayama</span><span class="tab-city-date">25–27 Apr</span></div>
+      <div class="tab admin-tab" onclick="switchToCity('kyoto',this)"><span class="tab-city-name">Kyoto</span><span class="tab-city-date">27 Apr–1 May</span></div>
+      <div class="tab admin-tab" onclick="switchToCity('tokyo',this)"><span class="tab-city-name">Tokyo</span><span class="tab-city-date">1–7 May</span></div>
+      <div class="tab admin-tab" onclick="switchToCity('hakone',this)"><span class="tab-city-name">Hakone</span><span class="tab-city-date">3–4 May</span></div>
+      <div class="tab admin-tab" onclick="switchToCity('kl',this)"><span class="tab-city-name">KL</span><span class="tab-city-date">8–10 May</span></div>
     </div>
   </div>
 
@@ -649,6 +885,9 @@ body.admin-mode .admin-note { display: block; }
 
   <!-- Mobile day view -->
   <div class="day-view" id="dayView"></div>
+
+  <!-- City activity view (Admin only) -->
+  <div class="city-view" id="cityView"></div>
 </div>
 
 <script>
@@ -1231,6 +1470,344 @@ function updateProgress() {
 if (sessionStorage.getItem('trip_unlocked') === '1') {
   renderCalendar();
   renderDayView();
+}
+
+// =====================
+// CITY ACTIVITY VIEW
+// =====================
+const cityActivities = [
+  {
+    id: 'osaka', name: 'Osaka', emoji: '🏯', dates: '23–25 Apr',
+    hotel: 'The OneFive Osaka Namba Dotonbori',
+    timing: 'Arrive ~7:50pm Apr 23 — evening only. One full day Apr 24. Check out 10am Apr 25, shinkansen to Okayama.',
+    warning: null, withFriends: false,
+    dayTrips: [],
+    clusters: [
+      { name: 'Namba / Dotonbori', note: 'Hotel is here — start on arrival evening', items: [
+        { name: 'Dotonbori canal strip', tag: 'activity', note: '5 min from hotel. Neon lights, street food — perfect for arrival night.' },
+        { name: 'Hozenji Yokocho', tag: 'activity', note: 'Narrow stone laneway, moss-covered shrine. Atmospheric at night.' },
+        { name: 'Kuromon Ichiba Market', tag: 'food', note: "Osaka's kitchen — go in the morning for snacks and fresh produce" },
+        { name: 'Takoyaki', tag: 'food', note: 'Eat on the street in Dotonbori' },
+        { name: 'Okonomiyaki', tag: 'food', note: 'Osaka-style savoury pancake' },
+        { name: 'Wagyu / Kobe beef dinner', tag: 'food', note: 'Main event — book ahead. Kobe is 30 min away but great spots right in Osaka.' },
+      ]},
+      { name: 'Nipponbashi / Den Den Town', note: '~15 min walk south of hotel', items: [
+        { name: 'Den Den Town', tag: 'activity', note: "Osaka's electronics district — retro games, components, hobby gear. Sebastien's warm-up before Akihabara." },
+      ]},
+      { name: 'Shinsekai', note: 'Combine with Den Den Town — same area', items: [
+        { name: 'Shinsekai neighbourhood', tag: 'activity', note: 'Retro 1950s atmosphere, very local feel, great for photos' },
+        { name: 'Kushikatsu', tag: 'food', note: "Deep-fried skewers on sticks — the local specialty. Don't double-dip the sauce." },
+      ]},
+      { name: 'Osaka Castle', note: 'North of centre', items: [
+        { name: 'Osaka Castle + park', tag: 'activity', note: 'Park and exterior worth seeing even if skipping the museum interior' },
+      ]},
+    ]
+  },
+  {
+    id: 'okayama', name: 'Okayama', emoji: '🌿', dates: '25–27 Apr',
+    hotel: 'Via Inn Okayama',
+    timing: 'Arrive afternoon Apr 25. Full day Apr 26. Check out Apr 27, shinkansen to Kyoto (~58 min).',
+    warning: null, withFriends: true,
+    dayTrips: [
+      { name: 'Kurashiki Bikan', who: null, duration: 'Half day', travel: '30 min by train',
+        note: 'Edo-period canal district — the most scenic part of the Okayama area', items: [
+        { name: 'Bikan Historical Quarter', tag: 'activity', note: 'Whitewashed storehouses, canal walks, beautifully preserved Edo atmosphere' },
+        { name: 'Ohara Museum of Art', tag: 'culture', note: 'Western art collection — genuinely excellent for a regional museum' },
+      ]},
+    ],
+    clusters: [
+      { name: 'Okayama City', note: 'Castle and garden are right next to each other — easy half day', items: [
+        { name: 'Korakuen Garden', tag: 'activity', note: "One of Japan's top 3 gardens — stunning in late April spring greenery" },
+        { name: 'Okayama Castle', tag: 'activity', note: 'Right next to Korakuen, easy to combine in the same visit' },
+        { name: 'Barazushi', tag: 'food', note: "Okayama's regional sushi — scattered style with local toppings" },
+        { name: 'Kibi dango', tag: 'food', note: 'Local sweet, sold everywhere near the castle' },
+      ]},
+    ]
+  },
+  {
+    id: 'kyoto', name: 'Kyoto', emoji: '⛩️', dates: '27 Apr – 1 May',
+    hotel: 'Hotel Tou Nishinotoin Kyoto',
+    timing: '3 full days (Apr 28–30). Check out May 1 by 11am, shinkansen to Tokyo. Apr 28 is pre-Golden Week — hit the busiest spots that day or very early morning.',
+    warning: 'Golden Week from Apr 29 — Fushimi Inari, Arashiyama, Kiyomizudera get extremely crowded. Prioritise Apr 28 for these or go at sunrise.',
+    withFriends: false,
+    dayTrips: [
+      { name: 'Uji', who: 'Phoebe', duration: 'Half day to full day', travel: '~30 min by JR Nara Line or Kintetsu',
+        note: "Easy day trip — Phoebe's matcha pilgrimage. Can be done as a relaxed half-day.", items: [
+        { name: 'Byōdō-in Temple', tag: 'activity', note: 'Stunning 11th-century temple — featured on the 10-yen coin' },
+        { name: 'Riverside walks', tag: 'activity' },
+        { name: 'Matcha desserts', tag: 'food', note: 'Uji is the matcha capital of Japan — everywhere you look' },
+        { name: 'Green tea soba', tag: 'food' },
+      ]},
+    ],
+    clusters: [
+      { name: 'Higashiyama / Kiyomizu', note: '⚡ Prioritise Apr 28 before Golden Week crowds hit', items: [
+        { name: 'Kiyomizu-dera', tag: 'activity', note: 'Iconic hillside temple with wooden stage jutting over the valley' },
+        { name: 'Higashiyama streets', tag: 'activity', note: 'Stone lanes, craft shops and teahouses — classic old Kyoto atmosphere' },
+      ]},
+      { name: 'Arashiyama', note: 'Go early morning. Sebastien\'s Torokko + Hozugawa day is based here.', items: [
+        { name: 'Bamboo grove', tag: 'activity', note: 'Go at 7am — magical before crowds arrive. One of Japan\'s most iconic sights.' },
+        { name: 'Tenryu-ji garden', tag: 'activity', note: 'UNESCO world heritage garden, beautiful and spacious' },
+        { name: 'Sagano Torokko Scenic Train', tag: 'activity', note: 'Vintage open-air train through the Hozu River gorge to Kameoka. Book ahead — Golden Week sells out fast.' },
+        { name: 'Hozugawa River Boat Ride', tag: 'activity', note: '2-hr rapids ride back from Kameoka → Arashiyama. Do as a combo with the Torokko — take the train one way, boat back. Book ahead.' },
+        { name: "Philosopher's Path", tag: 'activity', note: 'Canal-side walking path — lovely in spring, good between areas' },
+      ]},
+      { name: 'Fushimi (south)', note: 'Go at sunrise — the only peaceful time during Golden Week', items: [
+        { name: 'Fushimi Inari', tag: 'activity', note: 'Thousands of torii gates up the mountain. At sunrise it\'s stunning; at midday during Golden Week it\'s a wall of people.' },
+      ]},
+      { name: 'Central / Kawaramachi', note: 'Main shopping and food corridor', items: [
+        { name: 'Nishiki Market', tag: 'food', note: 'Narrow covered market — great for grazing through lunch' },
+        { name: 'Kyoto kaiseki set meal', tag: 'food', note: 'Do at least one proper sit-down Kyoto meal' },
+        { name: 'Tempura', tag: 'food' },
+        { name: 'Amam Dacotan', tag: 'food', note: 'Bakery' },
+        { name: 'Angers', tag: 'shopping', note: 'Home goods' },
+        { name: 'Katayama Bunzaburo', tag: 'shopping', note: 'Gifts — verify exact location' },
+      ]},
+      { name: 'Gion', note: 'Best after 8pm when tour groups leave', items: [
+        { name: 'Gion evening streets', tag: 'activity', note: 'Machiya townhouses, lanterns, possible geiko sighting' },
+        { name: 'Kahitsukan', tag: 'culture', note: 'Gallery — verify exact location' },
+        { name: 'Beatle Momo', tag: 'bar', note: 'Bar' },
+      ]},
+      { name: 'Near Hotel (Nishinotoin)', note: 'Your base for the stay', items: [
+        { name: 'Hotel Tou Nishinotoin', tag: 'activity', note: "Phoebe's hotel pick — worth exploring the property itself" },
+      ]},
+      { name: 'Verify Location', note: 'These need to be pinned on a map before the trip', items: [
+        { name: 'Eight', tag: 'food', note: 'Bakery' },
+        { name: 'Kikuo Shoten', tag: 'shopping', note: 'Print store' },
+        { name: 'Ryouen', tag: 'shopping', note: 'Specialty tea' },
+      ]},
+    ]
+  },
+  {
+    id: 'tokyo', name: 'Tokyo', emoji: '🗼', dates: '1–7 May',
+    hotel: 'City Oasis Tokyo',
+    timing: '~5 usable days. Hakone overnight May 3–4. Fly May 7 at 11:50pm — full last day available. Golden Week ends May 6.',
+    warning: null, withFriends: false,
+    dayTrips: [
+      { name: 'Kamakura', who: 'Both', duration: 'Full day', travel: '~1 hr by train from Tokyo',
+        note: 'Feels genuinely distinct from Tokyo — temples, forest trails, Giant Buddha, ends at the coast', items: [
+        { name: 'Great Buddha (Kotoku-in)', tag: 'activity', note: 'Iconic 13m bronze statue' },
+        { name: 'Zen temples + forest hiking trails', tag: 'activity', note: 'Hike between shrines through bamboo forest — great in early May' },
+        { name: 'Coastal walk', tag: 'activity', note: 'The town ends at the sea — lovely way to finish the day' },
+      ]},
+    ],
+    clusters: [
+      { name: 'Harajuku / Omotesando / Aoyama', note: 'Dense cluster — easily a full day. Meiji Shrine is 10 min walk from Harajuku station.', items: [
+        { name: 'Meiji Shrine', tag: 'activity', note: 'Peaceful forested shrine in the middle of the city' },
+        { name: 'Omotesando', tag: 'shopping', note: 'Tree-lined avenue, flagship stores, great architecture' },
+        { name: 'Laforet Harajuku', tag: 'shopping' },
+        { name: 'Hysteric Glamour', tag: 'shopping' },
+        { name: 'Comme des Garçons', tag: 'shopping', note: 'Minami-Aoyama end' },
+        { name: '2nd Street', tag: 'shopping', note: 'Large multi-level thrift' },
+        { name: 'Cafe Kitsune', tag: 'food', note: 'Cafe' },
+        { name: 'White Glass Coffee', tag: 'food', note: 'Cafe' },
+        { name: 'Higuma Donuts', tag: 'food' },
+        { name: "I'm Donut?", tag: 'food' },
+        { name: 'Verve Coffee Roasters', tag: 'food', note: 'Cafe' },
+      ]},
+      { name: 'Shibuya', items: [
+        { name: 'Shibuya crossing + Shibuya Sky', tag: 'activity', note: 'The famous scramble crossing + rooftop observation deck' },
+        { name: 'Shibuya Parco', tag: 'shopping' },
+        { name: 'A10 bar', tag: 'bar', note: "Phoebe's must-do" },
+        { name: 'About Life Coffee', tag: 'food', note: 'Cafe' },
+        { name: 'Ogawa Coffee Laboratory', tag: 'food', note: 'Cafe' },
+      ]},
+      { name: 'Shimokitazawa', note: 'Its own half-day destination — indie, vintage, live music, cafes', items: [
+        { name: 'Neighbourhood wander', tag: 'activity', note: 'Narrow streets, flea markets, live venues — a very different side of Tokyo' },
+        { name: 'Casanova Vintage', tag: 'shopping' },
+        { name: 'Chingle Bell', tag: 'shopping' },
+        { name: 'Recoco Record', tag: 'activity', note: 'Record shop cafe' },
+      ]},
+      { name: 'Daikanyama / Nakameguro', note: 'Quiet and stylish. Easy to combine with Shibuya or Shimokitazawa.', items: [
+        { name: 'Nakameguro canal walk', tag: 'activity', note: 'Lovely walk along the canal, especially in the evening' },
+        { name: 'Visvim', tag: 'shopping' },
+        { name: 'Parlor Ohashi', tag: 'food', note: 'Cafe' },
+        { name: 'Little Cloud Coffee', tag: 'food', note: 'Cafe (Meguro, nearby)' },
+      ]},
+      { name: 'Ginza', note: 'Very stackable — Dover St Market, Morioka Shoten, and Shiseido Gallery are all walking distance.', items: [
+        { name: 'Ginza architecture walk', tag: 'activity', note: "Some of Tokyo's best modern buildings" },
+        { name: 'Dover Street Market', tag: 'shopping' },
+        { name: 'Morioka Shoten', tag: 'activity', note: 'Single-book bookstore — only sells one book at a time. Genuinely special concept.' },
+        { name: 'Shiseido Gallery', tag: 'culture', note: 'Contemporary art, free' },
+        { name: 'Bongen', tag: 'food', note: 'Cafe' },
+        { name: 'Plat', tag: 'food', note: 'Cafe (Chiyoda, nearby)' },
+      ]},
+      { name: 'Asakusa', note: 'Combine with Akihabara — same side of the city, ~15 min apart', items: [
+        { name: 'Sensō-ji', tag: 'activity', note: "Tokyo's oldest temple — massive entrance gate, incense, street food" },
+        { name: 'Nakamise shopping street', tag: 'activity', note: 'Traditional snacks and souvenirs leading up to the temple' },
+        { name: 'Hatoya Asakusa', tag: 'food', note: 'Cafe' },
+      ]},
+      { name: 'Akihabara', note: 'Combine with Asakusa. Ueno (museums) also nearby.', items: [
+        { name: 'Akihabara electronics district', tag: 'activity', note: "Sebastien's main event — components, retro games, hobby gear, full sensory overload" },
+        { name: 'National Museum of Nature and Science', tag: 'culture', note: 'Ueno — great for the engineering/science angle' },
+      ]},
+      { name: 'Roppongi', items: [
+        { name: 'Mori Art Museum', tag: 'culture', note: 'Contemporary art + incredible city views from the observation deck (Roppongi Hills)' },
+        { name: 'Connell Coffee', tag: 'food', note: 'Cafe (Minato area)' },
+        { name: 'Cafe Les Jeux', tag: 'food', note: 'Cafe (Minato area)' },
+      ]},
+      { name: 'Toyosu', note: 'East side — worth combining with a Tsukiji market morning or Ginza visit', items: [
+        { name: 'teamLab Planets', tag: 'culture', note: 'Immersive digital art. ADVANCE BOOKING REQUIRED — sells out weeks ahead. Do this now.' },
+      ]},
+      { name: 'Anniversary Dinner', note: 'Book 4–6 weeks ahead', items: [
+        { name: 'Special dinner reservation', tag: 'food', note: '~$200 AUD / ¥19,000 for two. Omakase sushi, teppanyaki wagyu, or upscale kaiseki. Pick a cuisine and book early.' },
+      ]},
+    ]
+  },
+  {
+    id: 'hakone', name: 'Hakone', emoji: '♨️', dates: '3–4 May',
+    hotel: 'Overnight ryokan (TBD)',
+    timing: 'Overnight from Tokyo. Romancecar from Shinjuku ~85 min each way. Golden Week — book accommodation and Romancecar well in advance.',
+    warning: 'Mt Fuji views are weather-dependent — May can be cloudy. Best viewing spots: Hakone Ropeway and Lake Ashi. Open Air Museum is an excellent fallback whatever the weather.',
+    withFriends: true,
+    dayTrips: [],
+    clusters: [
+      { name: 'Hakone Area', note: 'All activities are within the Hakone loop — most people do Ropeway → Owakudani → Lake Ashi in sequence', items: [
+        { name: 'Romancecar train', tag: 'activity', note: 'Scenic limited express from Shinjuku — book seats in advance, worth it' },
+        { name: 'Hakone Ropeway', tag: 'activity', note: 'Rides over Owakudani volcanic valley — Mt Fuji views on clear days' },
+        { name: 'Lake Ashi cruise', tag: 'activity', note: 'Boat across the lake with Mt Fuji backdrop — the iconic postcard shot' },
+        { name: 'Owakudani', tag: 'activity', note: 'Active volcanic area, sulphur vents, black eggs boiled in volcanic water' },
+        { name: 'Hakone Open Air Museum', tag: 'culture', note: 'Outdoor sculpture park — excellent, worth it in any weather' },
+        { name: 'Onsen', tag: 'activity', note: 'Hot spring bathing — the whole point of Hakone. Most ryokans include it.' },
+      ]},
+    ]
+  },
+  {
+    id: 'kl', name: 'Kuala Lumpur', emoji: '🏙️', dates: '8–10 May',
+    hotel: 'JW Marriott Kuala Lumpur',
+    timing: 'Arrive 6:10am May 8 — rest up, afternoon/evening only. One full day May 9. Leave hotel 6am May 10 for 9:15am flight. Effectively 1.5 days.',
+    warning: null, withFriends: false,
+    dayTrips: [],
+    clusters: [
+      { name: 'Bukit Bintang', note: 'Hotel is here — walkable. Good for the May 8 evening after resting.', items: [
+        { name: 'Jalan Alor night market', tag: 'food', note: 'Famous street food strip — best at night, a short walk from the hotel' },
+        { name: 'Bukit Bintang wander', tag: 'activity', note: 'Food, night markets, lively street life right outside the hotel' },
+        { name: 'Nasi lemak', tag: 'food', note: 'The national dish — try for breakfast' },
+        { name: 'Roti canai', tag: 'food', note: 'Flaky flatbread + curry dipping sauce, everywhere, very cheap' },
+        { name: 'Cendol', tag: 'food', note: 'Shaved ice dessert — great in the heat' },
+      ]},
+      { name: 'KLCC', note: 'Short Grab or walk from hotel — good for May 9 morning', items: [
+        { name: 'Petronas Twin Towers', tag: 'activity', note: 'Skybridge + observation deck — book online in advance' },
+        { name: 'KLCC Park', tag: 'activity', note: 'Free walk around the base of the towers, great fountains' },
+        { name: 'Char kway teow', tag: 'food', note: 'Smoky wok-fried flat noodles — a KL staple' },
+        { name: 'Dim sum', tag: 'food', note: 'KL has excellent Cantonese dim sum — good for the May 8 morning after landing' },
+      ]},
+      { name: 'Batu Caves', note: '~30 min by KTM Komuter train — go early to beat the heat', items: [
+        { name: 'Batu Caves', tag: 'activity', note: 'Hindu temple in dramatic limestone cliffs — 272 colourful steps, genuinely impressive' },
+      ]},
+      { name: 'Further Afield', note: 'Only if time allows — Bangsar is ~15 min Grab', items: [
+        { name: 'Bangsar neighbourhood', tag: 'activity', note: 'Upscale cafes and restaurants, less touristy feel' },
+        { name: 'Chinatown (Petaling Street)', tag: 'activity', note: 'Busy market street, worth an hour' },
+        { name: 'Laksa', tag: 'food', note: 'Spicy coconut noodle soup — try here or at Jalan Alor' },
+      ]},
+    ]
+  },
+];
+
+const BADGE_CLASS = { food:'badge-food', activity:'badge-activity', shopping:'badge-shopping', bar:'badge-bar', culture:'badge-culture' };
+
+function renderItems(items) {
+  return items.map(item => `
+    <div class="activity-item">
+      <div class="activity-detail">
+        <div class="activity-name">${item.name}</div>
+        ${item.note ? `<div class="activity-note">${item.note}</div>` : ''}
+      </div>
+      <span class="activity-badge ${BADGE_CLASS[item.tag] || 'badge-activity'}">${item.tag}</span>
+    </div>`).join('');
+}
+
+function renderCityView(cityId) {
+  const city = cityActivities.find(c => c.id === cityId);
+  if (!city) return;
+  const chevronSVG = `<svg class="neighbourhood-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`;
+  let html = '';
+
+  // Header
+  html += `<div class="city-header-card">
+    <div class="city-header-top">
+      <span class="city-header-icon">${city.emoji}</span>
+      <span class="city-header-name">${city.name}</span>
+      <span class="city-header-dates">${city.dates}</span>
+    </div>
+    <div class="city-header-hotel">${city.hotel}</div>
+    <div class="city-timing">${city.timing}</div>
+    ${city.withFriends ? '<div class="city-friends-badge">👥 Staying with friends — their plans take priority</div>' : ''}
+    ${city.warning ? `<div class="city-warning">⚠️ ${city.warning}</div>` : ''}
+  </div>`;
+
+  // Day trips
+  if (city.dayTrips.length > 0) {
+    html += `<div class="section-label">Day Trips</div>`;
+    city.dayTrips.forEach(trip => {
+      html += `<div class="day-trip-card">
+        <div class="day-trip-header">
+          <span class="day-trip-name">🗺 ${trip.name}</span>
+          ${trip.who ? `<span class="day-trip-who">${trip.who}</span>` : ''}
+          <span class="day-trip-meta">${trip.duration} · ${trip.travel}</span>
+        </div>
+        ${trip.note ? `<div class="day-trip-note">${trip.note}</div>` : ''}
+        ${renderItems(trip.items)}
+      </div>`;
+    });
+  }
+
+  // Clusters
+  if (city.clusters.length > 0) {
+    html += `<div class="section-label">By Area</div>`;
+    city.clusters.forEach((cluster, idx) => {
+      html += `<div class="neighbourhood-card" id="nc-${cityId}-${idx}">
+        <div class="neighbourhood-header" onclick="toggleNeighbourhood(this)">
+          <div class="neighbourhood-header-top">
+            <span class="neighbourhood-name">${cluster.name}</span>
+            <span class="neighbourhood-count">${cluster.items.length}</span>
+            ${chevronSVG}
+          </div>
+          ${cluster.note ? `<div class="neighbourhood-sub-note">${cluster.note}</div>` : ''}
+        </div>
+        <div class="neighbourhood-body">
+          <div class="neighbourhood-body-inner">${renderItems(cluster.items)}</div>
+        </div>
+      </div>`;
+    });
+  }
+
+  document.getElementById('cityView').innerHTML = html;
+}
+
+function switchToCity(cityId, tabEl) {
+  document.getElementById('calView').style.display = 'none';
+  document.getElementById('dayView').style.display = 'none';
+  document.getElementById('cityView').style.display = 'flex';
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  if (tabEl) tabEl.classList.add('active');
+  renderCityView(cityId);
+  window.scrollTo(0, 0);
+}
+
+function switchToItinerary(tabEl) {
+  document.getElementById('cityView').style.display = 'none';
+  document.getElementById('calView').style.display = '';
+  document.getElementById('dayView').style.display = '';
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  if (tabEl) tabEl.classList.add('active');
+}
+
+function toggleNeighbourhood(header) {
+  const card = header.closest('.neighbourhood-card');
+  const body = card.querySelector('.neighbourhood-body');
+  const isOpen = card.classList.contains('open');
+  if (isOpen) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => { body.style.maxHeight = '0'; });
+    card.classList.remove('open');
+  } else {
+    card.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.addEventListener('transitionend', function h() {
+      if (card.classList.contains('open')) body.style.maxHeight = 'none';
+      body.removeEventListener('transitionend', h);
+    });
+  }
 }
 </script>
 </body>
